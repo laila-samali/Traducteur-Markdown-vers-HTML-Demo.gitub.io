@@ -47,13 +47,33 @@ Voici quelques exemples de mise en forme :
 
 ---
 
-## Code Inline et Blocs
+## Code en Ligne et Bloc
 
-Voici un exemple de code inline : `print("Hello, Markdown!")`.
+[[Voici un exemple de code inline : `print("Hello, Markdown!")`.]]
 
+
+<br>
 Et un bloc de code :
 
 ```python
 def hello_markdown():
     print("Hello, Markdown!")
 ```
+<br>
+
+
+
+## Texte Caché en Ligne, Bloc et Imbriqué
+
+Quelle est la capitale de la France? [[Paris]]
+<br>
+Pour résoudre cette équation, vous devez d'abord [[isoler x]] puis [[calculer la racine carrée des deux côtés]].
+<br>
+Solution complète:
+[[
+1. x² = 25
+2. √(x²) = √(25)
+3. x = ±5
+   ]]
+<br>
+Le théorème de Pythagore [[établit que dans un triangle rectangle, le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés [[soit a² + b² = c² où c est l'hypoténuse]]]] et permet de calculer la longueur d'un côté connaissant les deux autres.

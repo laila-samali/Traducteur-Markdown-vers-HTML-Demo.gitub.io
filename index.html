@@ -1,85 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Ma Page HTML</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <style>
-      .content-block {
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
+    <head>
+        <meta charset="UTF-8" />
+        <title>Ma Page HTML</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+        />
+        <style>
+            .content-block {
+                border: 2px solid #ccc;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                background-color: #f9f9f9;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                height: 100%;
+            }
+            .row {
+                display: flex;
+                justify-content: space-between;
+            }
 
-      .row {
-        display: flex;
-        justify-content: space-between;
-      }
+            .col-md-6 {
+                flex: 1;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
 
-      .col-md-6 {
-        flex: 1;
-        margin-right: 10px;
-        margin-left: 10px;
-      }
+            pre {
+                background-color: #f4f4f4;
+                padding: 15px;
+                border-radius: 5px;
+                font-family: "Courier New", Courier, monospace;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                height: 100%;
+                border: none;
+            }
 
-      pre {
-        background-color: #f4f4f4;
-        padding: 15px;
-        border-radius: 5px;
-        font-family: "Courier New", Courier, monospace;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        height: 100%;
-        border: none;
-      }
+            code {
+                font-family: "Courier New", Courier, monospace;
+            }
 
-      code {
-        font-family: "Courier New", Courier, monospace;
-      }
+            .container {
+                display: flex;
 
-      .container {
-        display: flex;
-        flex-direction: column;
-      }
+                flex-direction: column;
+            }
 
-      .download-link {
-        margin-left: 10px;
-        margin-top: 10px;
-        padding: 2px 5px; /* Réduire le padding */
-        background-color: grey;
-        color: white;
-        border-radius: 3px; /* Taille arrondie plus petite */
-        font-size: 1.2rem; /* Réduire la taille du texte */
-        text-decoration: none;
-        float: right;
-        margin-left: 10px;
-      }
-    </style>
-  </head>
-  <body class="container my-4">
-    <h1 class="text-center">Conversion du Markdown en HTML</h1>
+            .download-link {
+                margin-left: 10px;
+                margin-top: 10px;
+                padding: 2px 5px;
+                background-color: grey;
+                color: white;
+                border-radius: 3px;
+                font-size: 1.2rem;
+                text-decoration: none;
+                float: right;
+                margin-left: 10px;
+            }
+        </style>
+        <style>
+            .hidden-btn {
+                cursor: pointer;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                padding: 2px 5px;
+                margin: 0 2px;
+                font-size: 0.9em;
+                color: #555;
+                transition: background-color 0.3s;
+            }
 
-    <div class="row">
-      <!-- Contenu Markdown-->
-      <div class="col-md-6">
-        <h2>
-          Contenu Markdown
-          <!-- Lien pour télécharger le fichier test.md -->
-          <a href="test.md" class="download-link" download>Télécharger test.md</a>
-        </h2>
-        <div class="content-block">
-          <pre>
+            .hidden-btn:hover {
+                background-color: #e0e0e0;
+            }
+
+            .hidden-text {
+                padding: 0 5px;
+                border-left: 3px solid #007bff;
+                margin-left: 5px;
+            }
+        </style>
+        <script defer>
+            // Script amélioré pour la sauvegarde de l'état des textes cachés// Script amélioré pour la sauvegarde de l'état des textes cachés
+            function toggleVisibility(button) {
+                const hiddenText = button.nextElementSibling;
+                if (
+                    hiddenText.style.display == "none" ||
+                    hiddenText.style.display == ""
+                ) {
+                    hiddenText.style.display = "inline";
+                    button.textContent = "[-]";
+                } else {
+                    hiddenText.style.display = "none";
+                    button.textContent = "[...]";
+                }
+                saveHiddenState(); // Sauvegarder l'état immédiatement après chaque changement
+            }
+
+            // Fonction améliorée pour sauvegarder l'état
+            function saveHiddenState() {
+                const buttons = document.querySelectorAll(".hidden-btn");
+                const state = {};
+
+                buttons.forEach((button) => {
+                    // Utiliser l'ID du bouton comme clé unique
+                    const id = button.id;
+                    if (id) {
+                        // Vérifier si le texte caché correspondant est visible
+                        const hiddenText = button.nextElementSibling;
+                        state[id] = hiddenText.style.display !== "none";
+                    }
+                });
+
+                localStorage.setItem("hiddenTextState", JSON.stringify(state));
+            }
+
+            // Fonction améliorée pour charger l'état
+            function loadHiddenState() {
+                const savedState = localStorage.getItem("hiddenTextState");
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+
+                    // Pour chaque état sauvegardé
+                    Object.keys(state).forEach((id) => {
+                        // Trouver le bouton correspondant par son ID
+                        const button = document.getElementById(id);
+                        if (button && state[id]) {
+                            // Si le bouton existe et était ouvert, cliquer dessus
+                            // pour simuler l'ouverture
+                            toggleVisibility(button);
+                        }
+                    });
+                }
+            }
+
+            // Initialisation: cacher tous les textes
+            document.addEventListener("DOMContentLoaded", function () {
+                document
+                    .querySelectorAll(".hidden-text")
+                    .forEach(function (element) {
+                        element.style.display = "none";
+                    });
+
+                // Charger l'état précédent
+                loadHiddenState();
+            });
+        </script>
+    </head>
+    <body class="container my-4">
+        <h1 class="text-center">Conversion du Markdown en HTML</h1>
+
+        <div class="row">
+            <!-- Contenu Markdown-->
+            <div class="col-md-6">
+                <h2>
+                    Contenu Markdown
+                    <!-- Lien pour télécharger le fichier test.md -->
+                    <a href="test.md" class="download-link" download
+                        >Télécharger test.md</a
+                    >
+                </h2>
+                <div class="content-block">
+                    <pre>
 # Titre Principal
 
 Bienvenue dans ce **document Markdown** contenant une variété de balises et de styles pour montrer la flexibilité de Markdown.
@@ -138,97 +227,201 @@ Et un bloc de code :
 ```python
 def hello_markdown():
     print("Hello, Markdown!")
-</pre
-          >
+
+
+## Texte Caché en Ligne, Bloc et Imbriqué
+
+Quelle est la capitale de la France? [[Paris]]
+<br>
+Pour résoudre cette équation, vous devez d'abord [[isoler x]] puis [[calculer la racine carrée des deux côtés]].
+<br>
+Solution complète:
+[[
+    1. x² = 25
+    2. √(x²) = √(25)
+    3. x = ±5
+]]
+    <br>
+    Le théorème de Pythagore [[établit que dans un triangle rectangle, le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés [[soit a² + b² = c² où c est l'hypoténuse]]]] et permet de calculer la longueur d'un côté connaissant les deux autres.
+
+
+            </pre>
+                </div>
+            </div>
+
+            <!-- Contenu HTML -->
+            <div class="col-md-6">
+                <h2>
+                    Contenu HTML
+                    <!-- Lien pour télécharger le fichier index.html -->
+                    <a href="index.html" class="download-link" download
+                        >Télécharger test.html</a
+                    >
+                </h2>
+                <div class="content-block">
+                    <h1>Titre Principal</h1>
+                    <p>
+                        Bienvenue dans ce
+                        <strong>document HTML</strong> contenant une variété de
+                        balises et de styles pour montrer la flexibilité de
+                        HTML.
+                    </p>
+                    <h2>Liste des Contenus</h2>
+                    <ul>
+                        <li>
+                            <a href="#texte-en-gras-et-italique"
+                                >Texte en Gras et Italique</a
+                            >
+                        </li>
+                        <li><a href="#citations">Citations</a></li>
+                        <li><a href="#listes">Listes</a></li>
+                        <li>
+                            <a href="#code-inline-et-blocs"
+                                >Code Inline et Blocs</a
+                            >
+                        </li>
+                        <li><a href="#liens-et-images">Liens et Images</a></li>
+                        <li><a href="#tableaux">Tableaux</a></li>
+                        <li><a href="#texte-barré">Texte Barré</a></li>
+                    </ul>
+
+                    <hr />
+
+                    <h2 id="texte-en-gras-et-italique">
+                        Texte en Gras et Italique
+                    </h2>
+                    <ul>
+                        <li><strong>Texte en gras</strong></li>
+                        <li><i>Texte en italique</i></li>
+                        <li>
+                            <strong><i>Texte en gras et italique</i></strong>
+                        </li>
+                        <li><s>Texte barré</s></li>
+                    </ul>
+
+                    <h2 id="citations">Citations</h2>
+                    <blockquote
+                        class="blockquote border-start border-3 border-primary-subtle p-4 bg-secondary-subtle"
+                    >
+                        <p>C'est une citation simple.</p>
+                    </blockquote>
+
+                    <blockquote
+                        class="blockquote border-start border-3 border-primary-subtle p-4 bg-secondary-subtle"
+                    >
+                        <p>> C'est une citation imbriquée.</p>
+                    </blockquote>
+
+                    <hr />
+
+                    <h2 id="listes">Listes</h2>
+                    <h3>Liste Ordonnée</h3>
+                    <ol>
+                        <li>Élément 1</li>
+                        <li>Élément 2</li>
+                        <li>Sous-élément 2.1</li>
+                        <li>Sous-élément 2.2</li>
+                        <li>Élément 3</li>
+                    </ol>
+
+                    <h3>Liste Non Ordonnée</h3>
+                    <ul>
+                        <li>Élément 1</li>
+                        <li>Sous-élément 1.1</li>
+                        <li>Sous-élément 1.2</li>
+                        <li>Élément 2</li>
+                        <li>Élément 3</li>
+                    </ul>
+
+                    <hr />
+
+                    <h2>Code Inline et Blocs</h2>
+                    Voici un exemple de code inline :
+                    <code>print("Hello, Markdown!")</code>
+
+                    Et un bloc de code :
+
+                    <br /><code
+                        class="d-block python bg-secondary-subtle rounded-3 p-4"
+                    >
+                        <p>def hello_markdown():</p>
+                        <p>
+                            &ensp;&ensp;&ensp; print("Hello, Markdown!")
+                        </p></code
+                    >
+
+                    <
+                    <h2>Texte Caché en Ligne, Bloc et Imbriqué</h2>
+
+                    Quelle est la capitale de la France?
+                    <button
+                        id="btn_hidden_1742199810100_903"
+                        class="hidden-btn btn btn-sm btn-light border"
+                        onclick="toggleVisibility(this)"
+                    >
+                        [+]</button
+                    ><span class="hidden-text" style="display: none"
+                        >Paris</span
+                    >
+                    <br />
+                    Pour résoudre cette équation, vous devez d'abord
+                    <button
+                        id="btn_hidden_1742199810100_72"
+                        class="hidden-btn btn btn-sm btn-light border"
+                        onclick="toggleVisibility(this)"
+                    >
+                        [+]</button
+                    ><span class="hidden-text" style="display: none"
+                        >isoler x</span
+                    >
+                    puis
+                    <button
+                        id="btn_hidden_1742199810100_654"
+                        class="hidden-btn btn btn-sm btn-light border"
+                        onclick="toggleVisibility(this)"
+                    >
+                        [+]</button
+                    ><span class="hidden-text" style="display: none"
+                        >calculer la racine carrée des deux côtés</span
+                    >.
+                    <br />
+                    Solution complète:
+                    <button
+                        id="btn_hidden_1742199810101_675"
+                        class="hidden-btn btn btn-sm btn-light border"
+                        onclick="toggleVisibility(this)"
+                    >
+                        [+]</button
+                    ><span class="hidden-text" style="display: none"
+                        ><br />1. x² = 25<br />2. √(x²) = √(25)<br />3. x =
+                        ±5<br />
+                    </span>
+                    <br />
+                    Le théorème de Pythagore
+                    <button
+                        id="btn_hidden_1742199810101_878"
+                        class="hidden-btn btn btn-sm btn-light border"
+                        onclick="toggleVisibility(this)"
+                    >
+                        [+]</button
+                    ><span class="hidden-text" style="display: none"
+                        >établit que dans un triangle rectangle, le carré de
+                        l'hypoténuse est égal à la somme des carrés des deux
+                        autres côtés
+                        <button
+                            id="btn_hidden_1742199810101_977"
+                            class="hidden-btn btn btn-sm btn-light border"
+                            onclick="toggleVisibility(this)"
+                        >
+                            [+]</button
+                        ><span class="hidden-text" style="display: none"
+                            >soit a² + b² = c² où c est l'hypoténuse</span
+                        ></span
+                    >
+                    et permet de calculer la longueur d'un côté connaissant les
+                    deux autres.
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- Contenu HTML -->
-      <div class="col-md-6">
-        <h2>
-          Contenu HTML
-          <!-- Lien pour télécharger le fichier index.html -->
-          <a href="index.html" class="download-link" download>Télécharger index.html</a>
-        </h2>
-        <div class="content-block">
-          <h1>Titre Principal</h1>
-          <p>
-            Bienvenue dans ce <strong>document HTML</strong> contenant une
-            variété de balises et de styles pour montrer la flexibilité de HTML.
-          </p>
-          <h2>Liste des Contenus</h2>
-          <ul>
-            <li>
-              <a href="#texte-en-gras-et-italique">Texte en Gras et Italique</a>
-            </li>
-            <li><a href="#citations">Citations</a></li>
-            <li><a href="#listes">Listes</a></li>
-            <li><a href="#code-inline-et-blocs">Code Inline et Blocs</a></li>
-            <li><a href="#liens-et-images">Liens et Images</a></li>
-            <li><a href="#tableaux">Tableaux</a></li>
-            <li><a href="#texte-barré">Texte Barré</a></li>
-          </ul>
-
-          <hr />
-
-          <h2 id="texte-en-gras-et-italique">Texte en Gras et Italique</h2>
-          <ul>
-            <li><strong>Texte en gras</strong></li>
-            <li><i>Texte en italique</i></li>
-            <li>
-              <strong><i>Texte en gras et italique</i></strong>
-            </li>
-            <li><s>Texte barré</s></li>
-          </ul>
-
-          <h2 id="citations">Citations</h2>
-          <blockquote
-            class="blockquote border-start border-3 border-primary-subtle p-4 bg-secondary-subtle"
-          >
-            <p>C'est une citation simple.</p>
-          </blockquote>
-
-          <blockquote
-            class="blockquote border-start border-3 border-primary-subtle p-4 bg-secondary-subtle"
-          >
-            <p>> C'est une citation imbriquée.</p>
-          </blockquote>
-
-          <hr />
-
-          <h2 id="listes">Listes</h2>
-          <h3>Liste Ordonnée</h3>
-          <ol>
-            <li>Élément 1</li>
-            <li>Élément 2</li>
-            <li>Sous-élément 2.1</li>
-            <li>Sous-élément 2.2</li>
-            <li>Élément 3</li>
-          </ol>
-
-          <h3>Liste Non Ordonnée</h3>
-          <ul>
-            <li>Élément 1</li>
-            <li>Sous-élément 1.1</li>
-            <li>Sous-élément 1.2</li>
-            <li>Élément 2</li>
-            <li>Élément 3</li>
-          </ul>
-
-          <hr />
-
-          <h2>Code Inline et Blocs</h2>
-          Voici un exemple de code inline :
-          <code>print("Hello, Markdown!")</code>
-
-          Et un bloc de code :
-
-          <br /><code class="d-block python bg-secondary-subtle rounded-3 p-4">
-            <p>def hello_markdown():</p>
-            <p>&ensp;&ensp;&ensp; print("Hello, Markdown!")</p></code
-          >
-        </div>
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
